@@ -48,6 +48,7 @@ import SuccessToast from "../Toast/SuccessToast";
 import ErrorToast from "../Toast/ErrorToast";
 import { useDebounce } from "use-debounce";
 import { Link } from "react-router-dom";
+import InfoToast from "../Toast/InfoToast";
 
 export function Ques() {
   const [selectedQues, setSelectedQues] = useState(null);
@@ -130,10 +131,14 @@ export function Ques() {
   };
 
   const handleQuesSelection = async (quesId) => {
-    const data = await fetchSelectedQues(quesId);
-    if (data) {
-      setSelectedQues(data);
-      setIsQuestionModalOpen(true);
+    if (user) {
+      const data = await fetchSelectedQues(quesId);
+      if (data) {
+        setSelectedQues(data);
+        setIsQuestionModalOpen(true);
+      }
+    } else {
+      InfoToast("Please login to view the question");
     }
   };
 
